@@ -1,0 +1,8 @@
+{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Edit|Write",
+      "hooks": [{"type": "command", "command": "if [[ $CLAUDE_FILE_PATH == *.qmd ]]; then quarto check 2>&1 | head -20; fi"}]
+    }]
+  }
+}

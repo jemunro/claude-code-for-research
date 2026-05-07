@@ -4,6 +4,7 @@ This repository has two jobs:
 
 1. Source for a Bahlo lab meeting talk on 2026-05-12 on using Claude Code for research — see [deck.pdf](deck.pdf).
 2. A worked example. This repo follows the conventions described below — `CLAUDE.md`, `.claude/`, `session_logs/`, `` are all real files you can fork and adapt.
+3. The best way to learn is to try it out on something that you are curious about!
 
 ## Directory setup
 
