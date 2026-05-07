@@ -22,6 +22,3 @@
 - [Patrick Mineault · Claude Code for Scientists](https://www.neuroai.science/p/claude-code-for-scientists) — Speed of AI-assisted coding demands stronger validation, not weaker.
 - [wolf5996/agentic-skills](https://github.com/wolf5996/agentic-skills) — Skills repo with R-package, Quarto, R-code, and analysis-project skills; ships both `CLAUDE.md` and `CODEX.md`.
 
-## DL / ML background
-
-- [Flow Matching and Diffusion Models — MIT 6.S184 (2026)](https://diffusion.csail.mit.edu/) — Holderrieth & Erives lecture notes on SDEs, Fokker-Planck, and diffusion model components.
