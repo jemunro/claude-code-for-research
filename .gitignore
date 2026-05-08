@@ -1,1 +1,15 @@
 .DS_Store
+
+# LaTeX intermediates from Quarto-Beamer renders
+*.aux
+*.log
+*.nav
+*.snm
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Generated TeX from .qmd (regenerable via `quarto render`)
+deck.tex
