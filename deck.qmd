@@ -18,14 +18,7 @@ mainfontfallback: ["TeX Gyre Termes"]
 sansfontfallback: ["TeX Gyre Heros"]
 ---
 
-## {.plain}
-
-\begin{center}
-\vspace{2.0cm}
-{\rmfamily\bfseries\Huge Claude Code is\\research infrastructure,\\not autocomplete.}
-\end{center}
-
-## Three threads today
+## Three items today
 
 \vspace{0.4em}
 
@@ -89,33 +82,6 @@ Fluent and \textcolor{wehiOrange}{wrong} sound the same.
 
 If it "forgot" — it never had it.
 
-## Training data has a freshness date
-
-\vspace{0.6em}
-
-\begin{center}
-\begin{tikzpicture}[
-  font=\sffamily\small,
-  axis/.style={->, thick, wehiBlack},
-  cutoff/.style={wehiOrange, very thick, dashed},
-  now/.style={wehiTealDark, very thick}
-]
-  \draw[axis] (-6, 0) -- (6.5, 0) node[right, font=\sffamily\footnotesize] {time};
-
-  \draw[cutoff] (-1.5, -0.5) -- (-1.5, 1.6);
-  \node[text=wehiOrange, anchor=south, font=\sffamily\bfseries\small]
-    at (-1.5, 1.6) {Training cutoff};
-
-  \draw[now] (3, -0.5) -- (3, 1.6);
-  \node[text=wehiTealDark, anchor=south, font=\sffamily\bfseries\small]
-    at (3, 1.6) {Today};
-
-  \node[anchor=north, align=center] at (-4, -0.6) {seen during\\ training};
-  \node[anchor=north, align=center] at (0.75, -0.6) {published after cutoff\\ \footnotesize\textit{$\to$ it guesses}};
-  \node[anchor=north, align=center] at (5, -0.6) {your repo today\\ \footnotesize\textit{$\to$ never seen}};
-\end{tikzpicture}
-\end{center}
-
 ## Grounding turns guesses into answers we can check
 
 Show the actual file, the actual error, the actual data.
@@ -132,15 +98,11 @@ You read code in. You copy answers out. You re-paste errors.
 
 \vspace{0.6em}
 
-The model has no hands. You are the hands.
-
-\vspace{0.6em}
-
 \small Fine for one-off questions. Does not scale to a workflow.
 
 ## Claude Code, concretely
 
-A coding-agent CLI from Anthropic. Point it at a directory; it gets your files, your shell, git, and the web --- plus a loop to use them.
+A coding-agent CLI from Anthropic. Point it at a directory; it gets your files, your shell, git, and the web. 
 
 \vspace{0.3em}
 
@@ -189,7 +151,7 @@ Know your goal unless you say it.
 
 ## MCP servers turn Claude into a research client
 
-\small \textbf{MCP} (Model Context Protocol) — a shared interface that lets Claude call out to external services and data sources without bespoke glue. \normalsize
+\small \textbf{MCP} (Model Context Protocol) — a shared interface that lets Claude call out to external services and data sources. \normalsize
 
 \vspace{0.3em}
 
@@ -201,7 +163,6 @@ Know your goal unless you say it.
 
 \vspace{0.4em}
 
-A lever that makes Claude useful for \textcolor{wehiOrange}{research}, not just code.
 
 # How I actually use it
 
@@ -215,44 +176,58 @@ A lever that makes Claude useful for \textcolor{wehiOrange}{research}, not just 
 
 \vfill
 
-## The test pins Table 1 to the correct case definition
+## \texttt{fraction = 0.5} should keep ranges with at least 50\% overlap
 
 ::: {.columns}
 
 ::: {.column width="49%"}
-\textbf{Red} --- write the invariant first.
+Write the invariant first.
+
+\colorlet{shadecolor}{wehiPink!18}
 
 \scriptsize
 
 ```r
-# fixture: eids 1-2 prevalent, 3-5 incident
-cohort <- make_classified_cohort()
-tab <- summarise_cohort_characteristics(cohort)
+# only x1 has >=50% of itself
+# overlapping y
+x <- GRanges("chr1",
+  IRanges(c(1, 1, 100), width = c(10, 4, 5)))
+y <- GRanges("chr1", IRanges(6, width = 10))
 
-neuro <- tab[tab$variable ==
-  "Incident neurological dx (post-baseline)", ]
-expect_match(neuro$carrier, "^3 \\(")
+result <- filter_by_overlaps(
+  x, y, fraction = 0.5
+)
+expect_identical(length(result), 1L)
+expect_identical(start(result), 1L)
 ```
+
+\colorlet{shadecolor}{wehiCodeBg}
 :::
 
 ::: {.column width="49%"}
-\textbf{Green} --- incident = symptomatic \emph{and} post-baseline.
+Route through \texttt{overlap\_hits} when a fraction is set.
+
+\colorlet{shadecolor}{wehiGreen!18}
 
 \scriptsize
 
 ```r
-# in format_incident_row()
-.incident <- as.integer(
-  df[[bin_col]] == 1L &
-    !is.na(df[[age_col]]) &
-    df[[age_col]] > df$age_at_assessment
+# in filter_by_overlaps()
+fraction <- resolve_fraction(fraction)
+
+hits <- overlap_hits(
+  x, y, type, minoverlap, maxgap,
+  strand, fraction
 )
+x[hits$queryHits]
 ```
+
+\colorlet{shadecolor}{wehiCodeBg}
 :::
 
 :::
 
-## /capture, /meeting, /review make Claude a lab-notebook collaborator
+## Claude with skills becomes an interactive lab book
 
 \small Recurring workflows I wrote once as plain-text files in \texttt{.claude/commands/} and invoke with a slash. \normalsize
 
@@ -331,7 +306,7 @@ Not the author. The structure that lets me \textcolor{wehiOrange}{write more} of
 
 :::
 
-## Sub-agents read so the main session doesn't have to
+## Sub-agents delegates work away from the main session
 
 \vspace{0.4em}
 
@@ -362,7 +337,7 @@ Not the author. The structure that lets me \textcolor{wehiOrange}{write more} of
 
 # Verification
 
-## Git is Claude's other memory — and your safety net
+## Git is Claude's other memory 
 
 \begin{itemize}
   \item \textbf{Rollback is cheap.} \texttt{git reset} undoes nonsense.
@@ -373,7 +348,7 @@ Not the author. The structure that lets me \textcolor{wehiOrange}{write more} of
 
 Commit early, commit often.
 
-## Read the diff, every time
+## Read the changes every time
 
 \begin{itemize}
   \item Code $\to$ run the test, quote the output.
@@ -468,7 +443,7 @@ For any step that feeds a figure or a table:
 \textbf{Not fine without policy}
 
 \begin{itemize}
-  \item UKB, clinical data
+  \item clinical data
   \item Mixed code/data directories
   \item "It's on the HPC" as control
 \end{itemize}
@@ -478,12 +453,10 @@ For any step that feeds a figure or a table:
 
 \vspace{0.4em}
 
-\small It's not \emph{where} the agent runs --- it's \emph{what data leaves our networks}.
-
 ## Local models on the HPC unlock controlled-data work
 
 \begin{block}{The path forward}
-Run \textbf{open-weight models} (e.g.\ the \textbf{Qwen} family) on our HPC for work involving controlled-access data --- no bytes leave the network.
+Run \textbf{open-weight models} (e.g.\ the \textbf{Qwen} family) on our HPC for work involving controlled-access data.
 \end{block}
 
 \vspace{0.6em}

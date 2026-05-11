@@ -25,6 +25,12 @@
 \definecolor{wehiBlue}{HTML}{578CFF}
 \definecolor{wehiGreen}{HTML}{4EA749}
 
+% --- Per-block tinted code backgrounds for TDD red/green.
+% Used by \colorlet{shadecolor}{wehiPink!18} (or wehiGreen!18) before
+% a fenced code block to recolour Quarto's Shaded env. Reset with
+% \colorlet{shadecolor}{wehiCodeBg} after.
+\definecolor{wehiCodeBg}{RGB}{241,243,245}  % matches Quarto default Shaded bg
+
 % --- Define a 3-stop horizontal gradient as a TikZ shading ----
 % Used for title slide background and section divider top bands.
 \pgfdeclarehorizontalshading{wehiGradTMY}{100bp}{%
