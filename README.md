@@ -136,7 +136,7 @@ I find planning first makes sure that things don't go awry.
 - **Memory** — `session_logs/` updated at the end of every non-trivial session.
 - **Verification** — Claude reads the diff, runs the test, renders the figure. Git becomes very important here, to roll back when things go wrong.
 
-The skills I am frequently using are available in [.claude/skills](.claude/skills/README.md); adapt them as required, or use them as a starting point to make your own.
+The skills I am frequently using are available in [sa-lee/skills](https://github.com/sa-lee/skills); adapt them as required, or use them as a starting point to make your own.
 
 ## Reference Material
 
