@@ -1,20 +1,26 @@
 # Claude Code for Bioinformatics / Statistical Genetics
 
-This repository has two jobs:
+*Stuart Lee — 2026-05-12*
 
-1. Source for a Bahlo lab meeting talk on 2026-05-12 on using Claude Code for research — see [deck.pdf](deck.pdf).
-2. A worked example. This repo follows the conventions described below — `CLAUDE.md`, `.claude/`, `session_logs/`, `` are all real files you can fork and adapt.
-3. The best way to learn is to try it out on something that you are curious about!
+## What is this?
+
+1. Source for my Bahlo lab meeting talk on 2026-05-12 on using Claude Code for research — see [deck.pdf](deck.pdf).
+2. A worked example. This repo follows the conventions described below — `CLAUDE.md`, `.claude/`, and `session_logs/` are all real files you can fork and adapt.
+3. A starting point to try Claude Code out on something that you are curious about!
+
+## Installing Claude Code
+
+Read the [Quickstart guide](https://code.claude.com/docs/en/quickstart) and follow the instructions there.
 
 ## Directory setup
 
-A handful of files and folders show up in almost every project I run with 
-Claude Code.  You don't necessarily need any of them but I find they help turn it from just coding autocomplete into an active collaborator. 
+A handful of files and folders show up in almost every project I run with
+Claude Code. You don't necessarily need any of them, but they turn it from autocomplete into a helpful assistant.
 
 ### `CLAUDE.md` — persistent project memory
 
 `CLAUDE.md` is a plain markdown file in your project root that Claude reads into context at the start of every session. It is the project's contract for delegating
-to claude. It should be short, opinionated, things that would surprise a new collaborator if they didn't already know.
+to Claude. It should be short, opinionated, things that would surprise a new collaborator if they didn't already know.
 
 What I put in it:
 
@@ -27,12 +33,12 @@ What I put in it:
 What shouldn't go in:
 
 - Long architectural prose. That belongs in design docs that Claude reads on demand.
-- Anything Claude can derive from the code using it's `Bash` tool — file paths, function signatures, conventions visible in the repo.
+- Anything Claude can derive from the code using its `Bash` tool — file paths, function signatures, conventions visible in the repo.
 - Status updates. Those go in session logs.
 
 `CLAUDE.md` is **always loaded**, so every byte costs you context. Aim for under 100 lines.
 
-There are three scopes that get concatenated: a global one at `~/.claude/CLAUDE.md` for personal preferences (mine tells it who I am, what I do and how I want claude to act); a project-level one at the repo root; and a parent-directory one (e.g. `~/projects/CLAUDE.md`) for things shared across related projects.
+There are three scopes that get concatenated: a global one at `~/.claude/CLAUDE.md` for personal preferences (mine tells it who I am, what I do and how I want Claude to act); a project-level one at the repo root; and a parent-directory one (e.g. `~/projects/CLAUDE.md`) for things shared across related projects.
 
 If you use other LLM harnesses, the `CLAUDE.md` file is called `AGENTS.md`
 by pretty much everyone else.
@@ -49,7 +55,7 @@ The hidden `.claude/` directory holds anything beyond simple instructions:
 - `.claude/hooks/` — shell scripts triggered on events (e.g. auto-format on file write, log on session start).
 
 You don't need to worry about any of this on first use. Eventually you start integrating each aspect as you use it more, depending on what you find useful.
-I generally try to keep things pretty simple.  
+I generally try to keep things pretty simple.
 
 ### `session_logs/` — my own convention, not Claude's
 
@@ -82,7 +88,7 @@ If you fork this repo as a starting point, those are the files to carry across.
 
 ## Project setup for data analysis
 
-Here's how I'd lay out a fresh data analysis project. The skeleton is language-agnostic; I've called out R- and Python-flavoured specialisations where they matter. This is what works for me, not meant to be prescriptive. 
+Here's how I'd lay out a fresh data analysis project. The skeleton is language-agnostic; I've called out R- and Python-flavoured specialisations where they matter. This is what works for me, not meant to be prescriptive.
 
 ### The skeleton
 
@@ -107,36 +113,39 @@ my-analysis/
 
 Analysis language specialisations:
 
-- **R-targets pipeline** — `_targets.R` at the root, functions in `R/`, tests in `tests/testthat/`. This is what I use for UKB-RAP pipeline. 
+- **R-targets pipeline** — `_targets.R` at the root, functions in `R/`, tests in `tests/testthat/`. This is what I use for the UKB-RAP pipeline.
 - **Python `uv` project** — `pyproject.toml` at the root, code in `src/<package>/`, tests in `tests/`. A `Makefile` or `noxfile.py` drives the analysis. Notebooks live in `notebooks/` but never as the source of truth — they're scratchpads, the canonical pipeline is in `src/`.
 
-A lot of this is just a refit of the cookie-cutter-data
+Adapt as you see fit. I am assuming this setup happens once you have summarised sequencing data or the output of a Nextflow pipeline.
 
-Adapt as you see fit. I am assuming this set up happens once you have summarised sequencing data or the output of a nextflow pipeline.
+A lot of this is just a refit of the [cookiecutter-data-science](https://cookiecutter-data-science.drivendata.org/#directory-structure) repository.
+
 
 ### Where data lives
 
 1. **`data/raw/` is read-only.** If a downstream step needs to mutate something, it writes to `data/processed/`. Claude is told this in `CLAUDE.md`.
-2. **Reference canonical paths, never copy.** Same for figures: render once into `figures/`, reference from anywhere. For R specifically make use of the `here` package. 
+2. **Reference canonical paths, never copy.** Same for figures: render once into `figures/`; reference from anywhere. For R specifically, make use of the `here` package.
 3. **Sensitive data stays out of the repo entirely.** Code-only repos are fine, but the data lives elsewhere on the HPC behind the same access controls as before. Don't point a Claude session at a directory that contains controlled data!
 
-### How I use claude?
+### How I use Claude
 
-- **Planning** — Pre specify analyses or design of R functions with claude, save the output as a plan. You can also get claude to interview you for what you want.
-I find planning first makes sure that things don't go a awry.  
+- **Planning** — Pre-specify analyses or design of R functions with Claude, save the output as a plan. You can also get Claude to interview you for what you want.
+I find planning first makes sure that things don't go awry.
 - **Implementation** — TDD on package code (`/r-package-tdd`), simulation-based verification on pipeline steps.
-- **Reporting** — I have a `/beautiful-deck-quarto` skill that help me turn analysis reports or written scripts into slide decks.
+- **Reporting** — I have a `/beautiful-deck-quarto` skill that helps me turn analysis reports or written scripts into slide decks.
 - **Memory** — `session_logs/` updated at the end of every non-trivial session.
-- **Verification** — Claude reads the diff, runs the test, renders the figure, *before* saying "done". Git becomes very important here, to roll back 
+- **Verification** — Claude reads the diff, runs the test, renders the figure. Git becomes very important here, to roll back when things go wrong.
 
+The skills I am frequently using are available in [.claude/skills](.claude/skills/README.md); adapt them as required, or use them as a starting point to make your own.
 
 ## Reference Material
 
-Here's a non-exhaustive list of material I have found useful for understanding how to integrate Claude into research work. 
+Here's a non-exhaustive list of material I have found useful for understanding how to integrate Claude into research work.
 
-- [Paul Goldsmith-Pinkham — "Getting started with Claude Code"](https://paulgp.substack.com/p/getting-started-with-claude-code): This series of posts is helpful in framing how Agentic AI could be useful for research work tasks.  
-- [Scott Cunningham — MixtapeTools repo](https://github.com/scunning1975/MixtapeTools): Scott Cunningham is an econometrics/economics professor, a lot of the ideas he proposes here are transferable to other fields. His [substack](https://causalinf.substack.com/s/claude-code?utm_source=substack&utm_medium=menu) is also really good.
-- [How Boris uses Claude Code](https://howborisusesclaudecode.com/): Details about how the creator of Claude Code uses it for software development. Lots of tips and tricks. 
-- [Claude Blattman · AI for Professionals Who Don't Code](https://claudeblattman.com/): An intricate workflow system for managing research projects, email, meetings, and teams using Claude Code. Lots of neat suggestions and guides. 
-- [Anthropic Skilljar](https://anthropic.skilljar.com/): interactive courses for using Claude written by Anthropic
-- [Claude for Life Sciences](https://github.com/anthropics/life-sciences) I have not used this much but it looks potentially useful. A suite of skills and plugins for biology / bioinformatics work.
+- [Paul Goldsmith-Pinkham — "Getting started with Claude Code"](https://paulgp.substack.com/p/getting-started-with-claude-code): This series of posts is helpful in framing how agentic AI could be useful for research work tasks.
+- [Stephen Turner's blog](https://blog.stephenturner.us/): He has many posts about using AI for bioinformatics research.
+- [Scott Cunningham — MixtapeTools repo](https://github.com/scunning1975/MixtapeTools): Scott Cunningham is an econometrics/economics professor; a lot of the ideas he proposes here are transferable to other fields. His [substack](https://causalinf.substack.com/s/claude-code?utm_source=substack&utm_medium=menu) is also really good. I have adapted his beautiful deck idea to my own work.
+- [How Boris uses Claude Code](https://howborisusesclaudecode.com/): Details about how the creator of Claude Code uses it for software development. Lots of tips and tricks.
+- [Claude Blattman · AI for Professionals Who Don't Code](https://claudeblattman.com/): An intricate workflow system for managing research projects, email, meetings, and teams using Claude Code. Lots of neat suggestions and guides.
+- [Anthropic Skilljar](https://anthropic.skilljar.com/): Interactive courses for using Claude, written by Anthropic.
+- [Claude for Life Sciences](https://github.com/anthropics/life-sciences): A suite of skills and plugins for biology / bioinformatics work. I have not personally used it.
