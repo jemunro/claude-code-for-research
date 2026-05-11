@@ -44,16 +44,16 @@ sansfontfallback: ["TeX Gyre Heros"]
 ## An LLM chat is one long prompt that grows with every turn
 
 \begin{center}
-\includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{figures/llm-anatomy.png}
+\href{https://paulgp.substack.com/p/getting-started-with-claude-code}{\includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{figures/llm-anatomy.png}}
 \end{center}
 
 \vspace{0.2em}
 
-\footnotesize\color{wehiGrey70} A token is a subword piece — about three-quarters of a word, four characters on average. The context window is measured in tokens (Sonnet 4.6: 200K standard, 1M premium).
+\footnotesize\color{wehiGrey70} A token is a subword piece — about three-quarters of a word, four characters on average. The context window is measured in tokens (Opus 4.7 on the Team plan: 200K).
 
 ## Confident wrong answers are a feature of the architecture
 
-Not looking up facts. Generating fluent text.
+Without tools, it generates fluent text --- not retrieved facts.
 
 \vspace{0.5em}
 
@@ -116,7 +116,7 @@ If it "forgot" — it never had it.
 \end{tikzpicture}
 \end{center}
 
-## Grounding is what turns guessing into reasoning
+## Grounding turns guesses into answers we can check
 
 Show the actual file, the actual error, the actual data.
 
@@ -124,7 +124,7 @@ Show the actual file, the actual error, the actual data.
 
 What's in the buffer matters more than \textcolor{wehiOrange}{which model} you chose.
 
-# Web chat to agentic
+# From web to the command line
 
 ## In a web chat, you are the bridge between model and reality
 
@@ -137,6 +137,26 @@ The model has no hands. You are the hands.
 \vspace{0.6em}
 
 \small Fine for one-off questions. Does not scale to a workflow.
+
+## Claude Code, concretely
+
+A coding-agent CLI from Anthropic. Point it at a directory; it gets your files, your shell, git, and the web --- plus a loop to use them.
+
+\vspace{0.3em}
+
+\begin{itemize}
+  \item Runs in your terminal, in VS Code, or at \texttt{claude.ai/code}.
+  \item Calls Anthropic's API for each model turn.
+  \item Sees what you point it at.
+\end{itemize}
+
+\vspace{0.4em}
+
+\small \textbf{Models:} \textbf{Sonnet 4.6} for everyday coding; \textbf{Opus 4.7} for harder reasoning and longer context.
+
+\vspace{0.2em}
+
+\small \textcolor{wehiGrey70}{Not the only harness --- \textbf{Codex} (OpenAI), \textbf{Gemini CLI}, \textbf{OpenCode} do similar work. Lessons here transfer.}
 
 ## An agent reads files, runs commands, loops on results
 
@@ -169,122 +189,124 @@ Know your goal unless you say it.
 
 ## MCP servers turn Claude into a research client
 
-First-party, free:
+\small \textbf{MCP} (Model Context Protocol) — a shared interface that lets Claude call out to external services and data sources without bespoke glue. \normalsize
+
+\vspace{0.3em}
 
 \begin{itemize}
-  \item \textbf{PubMed} — search, metadata, full text.
-  \item \textbf{bioRxiv / medRxiv} — preprints by topic, author, funder.
-  \item \textbf{Google Drive, Gmail, Calendar} — notes, drafts, scheduling.
+  \item \href{https://claude.com/resources/tutorials/using-the-pubmed-connector-in-claude}{\textbf{PubMed}} — search, metadata, full text.
+  \item \href{https://claude.com/resources/tutorials/using-the-biorxiv-and-medrxiv-connector-in-claude}{\textbf{bioRxiv / medRxiv}} — preprints by topic, author, funder.
+  \item \href{https://support.claude.com/en/articles/12542951-enable-and-use-the-microsoft-365-connector}{\textbf{Microsoft 365}} — email, files, calendar.
 \end{itemize}
 
-\vspace{0.5em}
+\vspace{0.4em}
 
-The lever that makes Claude useful for \textcolor{wehiOrange}{research}, not just code.
+A lever that makes Claude useful for \textcolor{wehiOrange}{research}, not just code.
 
 # How I actually use it
 
-## TDD keeps the agent honest on the C9orf72 pipeline
+## {.plain}
 
-\begin{enumerate}
-  \item Plan mode — no code yet.
-  \item Plan: target function, its tests, the simulation.
-  \item Approve. Failing tests, then function, then green.
-  \item Read every diff.
-\end{enumerate}
+\vfill
 
-## Plan first, execute second — every iteration
+\begin{center}
+{\rmfamily\bfseries\huge TDD --- test-driven development ---\\gives agents a target you can check}
+\end{center}
+
+\vfill
+
+## The test pins Table 1 to the correct case definition
 
 ::: {.columns}
 
-::: {.column width="50%"}
-**Plan**
+::: {.column width="49%"}
+\textbf{Red} --- write the invariant first.
 
-- Function?
-- Inputs, outputs?
-- Property preserved?
-- Simulation that proves it?
+\scriptsize
+
+```r
+# fixture: eids 1-2 prevalent, 3-5 incident
+cohort <- make_classified_cohort()
+tab <- summarise_cohort_characteristics(cohort)
+
+neuro <- tab[tab$variable ==
+  "Incident neurological dx (post-baseline)", ]
+expect_match(neuro$carrier, "^3 \\(")
+```
 :::
 
-::: {.column width="50%"}
-**Execute**
+::: {.column width="49%"}
+\textbf{Green} --- incident = symptomatic \emph{and} post-baseline.
 
-- Tests fail.
-- Tests pass.
-- Read the diff.
-- Commit.
+\scriptsize
+
+```r
+# in format_incident_row()
+.incident <- as.integer(
+  df[[bin_col]] == 1L &
+    !is.na(df[[age_col]]) &
+    df[[age_col]] > df$age_at_assessment
+)
+```
 :::
 
 :::
-
-\vspace{0.4em}
-
-\small A bug in a web app frustrates a user. A bug in my analysis ends up in a \textcolor{wehiOrange}{paper}.
 
 ## /capture, /meeting, /review make Claude a lab-notebook collaborator
 
+\small Recurring workflows I wrote once as plain-text files in \texttt{.claude/commands/} and invoke with a slash. \normalsize
+
+\vspace{0.4em}
+
 \begin{itemize}
   \item \texttt{/capture} — thought, paper, fragment $\to$ structured note.
-  \item \texttt{/meeting} — Zoom transcript $\to$ actions, decisions, follow-ups.
+  \item \texttt{/meeting} — meeting transcript $\to$ actions, decisions, follow-ups.
   \item \texttt{/review} — week's end $\to$ summary, what's stuck, next week.
 \end{itemize}
 
-\vspace{0.5em}
+\vspace{0.4em}
 
 Not the author. The structure that lets me \textcolor{wehiOrange}{write more} of my own thinking down.
 
-## Daily notes feed weekly reviews feed paper drafts
+## A paper read becomes a queryable archive entry
 
-\vspace{0.4em}
+::: {.columns}
 
+::: {.column width="48%"}
 \begin{center}
-\begin{tikzpicture}[
-  font=\sffamily\small,
-  stage/.style={draw=wehiTealDark, fill=wehiTealTint, rounded corners=4pt,
-                minimum width=3.4cm, minimum height=1.4cm, align=center},
-  forward/.style={->, very thick, wehiTealDark},
-  back/.style={->, thick, wehiGrey70, dashed}
-]
-  \node[stage] (d) at (0,   0) {Daily notes\\ \footnotesize 5×/week};
-  \node[stage] (w) at (4.5, 0) {Weekly reviews\\ \footnotesize 1×/week};
-  \node[stage] (p) at (9,   0) {Paper draft\\ \footnotesize sections};
+\includegraphics[width=\textwidth, height=0.58\textheight, keepaspectratio]{figures/paper-note.jpg}
 
-  \draw[forward] (d) -- (w);
-  \draw[forward] (w) -- (p);
-
-  \draw[back] (w.north west) to[bend left=30] (d.north east);
-  \node[text=wehiGrey70, font=\sffamily\footnotesize] at (2.25, 1.55)
-    {Claude reads back};
-
-  \draw[back] (p.north west) to[bend left=30] (w.north east);
-  \node[text=wehiGrey70, font=\sffamily\footnotesize] at (6.75, 1.55)
-    {Claude reads back};
-\end{tikzpicture}
+\vspace{0.2em}
+{\footnotesize Handwritten while reading.}
 \end{center}
+:::
 
-\vspace{0.4em}
+::: {.column width="48%"}
+\begin{center}
+\includegraphics[width=\textwidth, height=0.58\textheight, keepaspectratio]{figures/paper-summarised.png}
 
-\small Methods come from March's notes. Discussion comes from when it first surprised me.
+\vspace{0.2em}
+{\footnotesize Linked, tagged, searchable from any future session.}
+\end{center}
+:::
+
+:::
+
+\vspace{0.2em}
+
+\small One \texttt{/capture} per paper. My \texttt{notes/} directory is just markdown — Claude reads it the same way I do.
 
 # Context management
 
 ## Context is the bottleneck, not the model
 
-::: {.columns}
+\begin{center}
+\href{https://paulgp.substack.com/p/getting-started-with-claude-code}{\includegraphics[width=0.72\textwidth, height=0.62\textheight, keepaspectratio]{figures/context-engineering.png}}
+\end{center}
 
-::: {.column width="62%"}
-![](figures/context-engineering.png){width=100%}
-:::
+\vspace{0.2em}
 
-::: {.column width="38%"}
-\small
-Near the limit, performance degrades.
-
-\vspace{0.5em}
-
-\textcolor{wehiOrange}{What} you put in beats how you phrase it.
-:::
-
-:::
+\small \textcolor{wehiOrange}{What} you put in beats how you phrase it.
 
 ## CLAUDE.md and skills give Claude durable memory
 
@@ -309,7 +331,7 @@ Near the limit, performance degrades.
 
 :::
 
-## Sub-agents read; design docs persist; restart before drift
+## Sub-agents read so the main session doesn't have to
 
 \vspace{0.4em}
 
@@ -322,8 +344,8 @@ Near the limit, performance degrades.
                  minimum width=4.2cm, minimum height=1.5cm, align=center, text=wehiGrey70},
   arrow/.style={->, thick, wehiTealDark}
 ]
-  \node[mainBox] (M1) at (-3.4,  1.4) {Main session\\ \footnotesize 8K tokens};
-  \node[mainBox] (M2) at (-3.4, -1.4) {Main session\\ \footnotesize 9K tokens (+ summary)};
+  \node[mainBox] (M1) at (-3.4,  1.4) {Main session\\ \footnotesize before --- 8K tokens};
+  \node[mainBox] (M2) at (-3.4, -1.4) {Main session\\ \footnotesize after --- 9K tokens (+ summary)};
   \node[subBox]  (S)  at ( 3.4,  0)   {Sub-agent\\ \footnotesize 80K tokens — twenty files};
 
   \draw[arrow] (M1.east) to[bend left=12] node[midway, above, font=\sffamily\footnotesize, text=wehiTealDark, yshift=2pt] {spawn} (S.north west);
@@ -336,7 +358,7 @@ Near the limit, performance degrades.
 
 \vspace{0.5em}
 
-\small Design docs survive sessions. Repeating corrected mistakes $=$ drift — restart, reload.
+\small Design docs survive sessions. \textbf{Drift} = repeating mistakes you've already corrected --- restart when it starts.
 
 # Verification
 
@@ -421,14 +443,14 @@ For any step that feeds a figure or a table:
   \node[card] at (4.7,  1.95) {\textbf{Confabulated paths}\\ \footnotesize verify by reading};
   \node[card] at (9.4,  1.95) {\textbf{Sycophancy}\\ \footnotesize it will agree if you push};
   \node[card] at (0,    0)    {\textbf{Cost runaway}\\ \footnotesize set a budget};
-  \node[card] at (4.7,  0)    {\textbf{Over-reliance}\\ \footnotesize risky for students mid-training};
+  \node[card] at (4.7,  0)    {\textbf{Outsourced judgment}\\ \footnotesize uses what you can't verify};
   \node[card] at (9.4,  0)    {\textbf{Vibe coding}\\ \footnotesize runs, but no one understands it};
 \end{tikzpicture}}
 \end{center}
 
-# Lab policies
+# Working with sensitive data
 
-## Data egress is the binding constraint, not SSH topology
+## Data egress is the constraint
 
 ::: {.columns}
 
@@ -446,7 +468,7 @@ For any step that feeds a figure or a table:
 \textbf{Not fine without policy}
 
 \begin{itemize}
-  \item UKB, GEL, clinical data
+  \item UKB, clinical data
   \item Mixed code/data directories
   \item "It's on the HPC" as control
 \end{itemize}
@@ -456,32 +478,30 @@ For any step that feeds a figure or a table:
 
 \vspace{0.4em}
 
-\small Not \emph{where} the agent runs. \emph{What bytes leave the building}.
+\small It's not \emph{where} the agent runs --- it's \emph{what data leaves our networks}.
 
-## Ask IT for an Enterprise tier and a deny-list
+## Local models on the HPC unlock controlled-data work
 
-\begin{block}{Concrete ask}
-\textbf{Enterprise tier} (zero data retention) $+$ a documented \textbf{deny-list} for controlled-access directories.
+\begin{block}{The path forward}
+Run \textbf{open-weight models} (e.g.\ the \textbf{Qwen} family) on our HPC for work involving controlled-access data --- no bytes leave the network.
 \end{block}
 
 \vspace{0.6em}
 
 Until then: laptops $\checkmark$, code-only HPC $\checkmark$, controlled data \textcolor{wehiOrange}{off-limits}.
 
-# Where to start
+\vspace{0.4em}
 
-## You all have access — try this Monday
+\footnotesize Anthropic doesn't train on commercial-tier prompts; \textbf{Enterprise tier} adds zero-data-retention if we need it.
 
-\begin{block}{Three things this week}
+# Where to from here?
+
+##
+
+\begin{block}{Now $\to$ next $\to$ ongoing}
 \begin{enumerate}
-  \item Open Claude Code in a real project. Propose a \texttt{CLAUDE.md}. Commit.
-  \item One recurring task $\to$ slash command.
-  \item Pick an activity from \texttt{ACTIVITIES.md}.
+  \item \textbf{Now} — work through \texttt{ACTIVITIES.md} together.
+  \item \textbf{Next week} — pick one activity, try it on your own work, bring back what broke.
+  \item \textbf{Ongoing} — regular lab catch-up to share tips, skills, and gotchas as we find them.
 \end{enumerate}
 \end{block}
-
-\vspace{0.8em}
-
-\begin{center}
-\textbf{\large Claude Code is research infrastructure, not autocomplete.}
-\end{center}

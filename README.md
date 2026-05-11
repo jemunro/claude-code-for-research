@@ -142,7 +142,7 @@ The skills I am frequently using are available in [.claude/skills](.claude/skill
 
 Here's a non-exhaustive list of material I have found useful for understanding how to integrate Claude into research work.
 
-- [Paul Goldsmith-Pinkham — "Getting started with Claude Code"](https://paulgp.substack.com/p/getting-started-with-claude-code): This series of posts is helpful in framing how agentic AI could be useful for research work tasks.
+- [Paul Goldsmith-Pinkham — "Getting started with Claude Code"](https://paulgp.substack.com/p/getting-started-with-claude-code): This series of posts is helpful in framing how agentic AI could be useful for research work tasks. The hand-drawn LLM anatomy and context-engineering figures used on slides 5 and 20 of the deck are from his post.
 - [Stephen Turner's blog](https://blog.stephenturner.us/): He has many posts about using AI for bioinformatics research.
 - [Scott Cunningham — MixtapeTools repo](https://github.com/scunning1975/MixtapeTools): Scott Cunningham is an econometrics/economics professor; a lot of the ideas he proposes here are transferable to other fields. His [substack](https://causalinf.substack.com/s/claude-code?utm_source=substack&utm_medium=menu) is also really good. I have adapted his beautiful deck idea to my own work.
 - [How Boris uses Claude Code](https://howborisusesclaudecode.com/): Details about how the creator of Claude Code uses it for software development. Lots of tips and tricks.
