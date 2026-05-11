@@ -49,7 +49,7 @@ sansfontfallback: ["TeX Gyre Heros"]
 
 \vspace{0.2em}
 
-\footnotesize\color{wehiGrey70} A token is a subword piece — about three-quarters of a word, four characters on average. The context window is measured in tokens (Opus 4.7 on the Team plan: 200K).
+\footnotesize\color{wehiGrey70} A token is a subword piece — about three-quarters of a word, four characters on average. The context window is measured in tokens (Opus 4.7 on the Team plan: 1M).
 
 ## Confident wrong answers are a feature of the architecture
 

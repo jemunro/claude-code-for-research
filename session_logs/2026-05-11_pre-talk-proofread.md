@@ -78,17 +78,15 @@ These are deck issues identified in the proofread but **not changed**. Worth a d
 Resolved this session:
 
 - [x] Commit `ACTIVITIES.md` fixes — landed in `b18f24a` (alongside README expansion).
-- [x] Deck fixes flagged in proofread (Sonnet 4.6 reference, First-party MCP framing, "this Monday") — superseded; the proofread-flagged lines no longer exist in current `deck.qmd`. The Sonnet 4.6 footnote was replaced by an Opus 4.7 / Team plan line at `deck.qmd:52` (see new open item below).
+- [x] Deck fixes flagged in proofread (Sonnet 4.6 reference, First-party MCP framing, "this Monday") — superseded; the proofread-flagged lines no longer exist in current `deck.qmd`. The Sonnet 4.6 footnote was replaced by an Opus 4.7 / Team plan line at `deck.qmd:52` (1M, corrected this session).
 - [x] Slide 32 punchline buried as caption — moot; old slide 32 replaced entirely.
 - [x] Slide 22 dual-`Main session` labelling — resolved with `before` / `after` modifiers.
 
 Still open:
 
-- [ ] Verify `deck.qmd:52` footnote claim "Opus 4.7 on the Team plan: 200K" against current Anthropic docs before delivery. Plausible (Team tier likely doesn't ship the 1M premium), but unverified.
+- [x] Verify `deck.qmd:52` footnote — corrected. Opus 4.7 on the Team plan is **1M**, not 200K; updated in-line.
+- [x] Screenshots for slides 11 / 12 / 14 / 17 (carryover from 2026-05-08) — landed; placeholders cleared.
 - [ ] Rehearsal pass. Slide 11 (`Claude Code, concretely`) is the densest in the deck — paragraph + 3 bullets + Models line + harness footnote. The harness footnote is the easiest verbal cut if it feels slow.
-- [ ] `/tikz deck.tex` audit-2 — still skipped; the slide 22 TikZ edits were direct, not via `/tikz`. Worth a run before any further mechanical changes.
-- [ ] Screenshots for slides 11 / 12 / 14 / 17 — carryover from 2026-05-08; deferred until after delivery. Deck reads without them.
-- [ ] `README.md` extra line (PGP attribution at line 145) committed in this session's commit. The earlier flagged `## Stuart Lee 2026-05-12` header and Installing section were already in the README at session start — not authored by us.
 
 ## Cross-references
 
