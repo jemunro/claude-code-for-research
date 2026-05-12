@@ -20,8 +20,7 @@ point that lab members can fork after the talk.
 
 - When I ask for the deck, use `/beautiful-deck-quarto`. Source
   material is `OUTLINE.md`; figures live in `figures/`.
-- The talk's goal is to show my colleagues ways of improving research workflows with
-agentic AI and what is possible
+- The talk's goal is to show my colleagues ways of improving research workflows with  AI and what is possible
 - The `README.md` treats this repo as its own worked example.
   If you change a convention in the README, check the repo
   actually follows it.

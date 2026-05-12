@@ -37,20 +37,8 @@ sansfontfallback: ["TeX Gyre Heros"]
 ## An LLM chat is one long prompt that grows with every turn
 
 \begin{center}
-\href{https://paulgp.substack.com/p/getting-started-with-claude-code}{\includegraphics[width=0.7\textwidth, height=0.6\textheight, keepaspectratio]{figures/llm-anatomy.png}}
+\href{https://paulgp.substack.com/p/getting-started-with-claude-code}{\includegraphics[width=0.88\textwidth, height=0.74\textheight, keepaspectratio]{figures/llm-anatomy.png}}
 \end{center}
-
-\vspace{0.2em}
-
-\footnotesize\color{wehiGrey70} A token is a subword piece — about three-quarters of a word, four characters on average. The context window is measured in tokens (Opus 4.7 on the Team plan: 1M).
-
-## Confident wrong answers are a feature of the architecture
-
-Without tools, it generates fluent text --- not retrieved facts.
-
-\vspace{0.5em}
-
-Fluent and \textcolor{wehiOrange}{wrong} sound the same.
 
 ## The context window is the model's only memory
 
@@ -80,8 +68,6 @@ Fluent and \textcolor{wehiOrange}{wrong} sound the same.
 
 \vspace{0.4em}
 
-If it "forgot" — it never had it.
-
 ## Grounding turns guesses into answers we can check
 
 Show the actual file, the actual error, the actual data.
@@ -100,7 +86,7 @@ You read code in. You copy answers out. You re-paste errors.
 
 \small Fine for one-off questions. Does not scale to a workflow.
 
-## Claude Code, concretely
+## Claude Code in a nutshell
 
 A coding-agent CLI from Anthropic. Point it at a directory; it gets your files, your shell, git, and the web. 
 
@@ -249,7 +235,7 @@ Not the author. The structure that lets me \textcolor{wehiOrange}{write more} of
 
 ::: {.column width="48%"}
 \begin{center}
-\includegraphics[width=\textwidth, height=0.58\textheight, keepaspectratio]{figures/paper-note.jpg}
+\includegraphics[width=\textwidth, height=0.68\textheight, keepaspectratio]{figures/paper-note.jpg}
 
 \vspace{0.2em}
 {\footnotesize Handwritten while reading.}
@@ -258,7 +244,7 @@ Not the author. The structure that lets me \textcolor{wehiOrange}{write more} of
 
 ::: {.column width="48%"}
 \begin{center}
-\includegraphics[width=\textwidth, height=0.58\textheight, keepaspectratio]{figures/paper-summarised.png}
+\includegraphics[width=\textwidth, height=0.68\textheight, keepaspectratio]{figures/paper-summarised.png}
 
 \vspace{0.2em}
 {\footnotesize Linked, tagged, searchable from any future session.}
@@ -267,21 +253,14 @@ Not the author. The structure that lets me \textcolor{wehiOrange}{write more} of
 
 :::
 
-\vspace{0.2em}
-
-\small One \texttt{/capture} per paper. My \texttt{notes/} directory is just markdown — Claude reads it the same way I do.
-
 # Context management
 
 ## Context is the bottleneck, not the model
 
 \begin{center}
-\href{https://paulgp.substack.com/p/getting-started-with-claude-code}{\includegraphics[width=0.72\textwidth, height=0.62\textheight, keepaspectratio]{figures/context-engineering.png}}
+\href{https://paulgp.substack.com/p/getting-started-with-claude-code}{\includegraphics[width=0.88\textwidth, height=0.74\textheight, keepaspectratio]{figures/context-engineering.png}}
 \end{center}
 
-\vspace{0.2em}
-
-\small \textcolor{wehiOrange}{What} you put in beats how you phrase it.
 
 ## CLAUDE.md and skills give Claude durable memory
 
@@ -358,8 +337,6 @@ Commit early, commit often.
 \end{itemize}
 
 \vspace{0.6em}
-
-"It should work" is \textcolor{wehiOrange}{not} verification.
 
 ## Simulate with a known truth; check it's recovered
 
@@ -473,7 +450,7 @@ Until then: laptops $\checkmark$, code-only HPC $\checkmark$, controlled data \t
 
 If you were on the list, you should've received an invite to join Bahlo lab team: 
 \begin{center}
-\includegraphics[width=0.72\textwidth, height=0.62\textheight, keepaspectratio]{figures/email-invite.png}
+\includegraphics[width=0.88\textwidth, height=0.74\textheight, keepaspectratio]{figures/email-invite.png}
 \end{center}
 
 
