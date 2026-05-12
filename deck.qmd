@@ -469,7 +469,15 @@ Until then: laptops $\checkmark$, code-only HPC $\checkmark$, controlled data \t
 
 # Where to from here?
 
-##
+## Accept the invite
+
+If you were on the list, you should've received an invite to join Bahlo lab team: 
+\begin{center}
+\includegraphics[width=0.72\textwidth, height=0.62\textheight, keepaspectratio]{figures/email-invite.png}
+\end{center}
+
+
+## Group activities
 
 \begin{block}{Now $\to$ next $\to$ ongoing}
 \begin{enumerate}

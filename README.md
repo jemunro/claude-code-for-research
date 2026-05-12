@@ -75,6 +75,7 @@ None of these are Claude-specific, but each makes Claude more useful:
 
 ```
 claude-code-tutorial/
+├── ACTIVITIES.md       # ideas on how you could use Claude
 ├── CLAUDE.md          # project constitution (short, opinionated)
 ├── OUTLINE.md         # talk content — the source of truth
 ├── REFERENCES.md      # full reference notes, longer than the talk
