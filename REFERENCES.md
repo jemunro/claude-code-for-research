@@ -1,6 +1,6 @@
 # Reading list — Claude Code talk references
 
-## Claude Code & agentic workflow
+## Claude Code & research workflow
 
 - [Russell Poldrack · Better Code, Better Science](https://bettercodebetterscience.github.io/book/) — Open book on AI-assisted coding for reproducible scientific software: testing, project structure, workflow management, validation.
 - [Claude Blattman · AI for Professionals Who Don't Code](https://claudeblattman.com/) — A professor's open-source AI workflow for managing research projects, email, and teams with Claude Code.
@@ -22,3 +22,8 @@
 - [Patrick Mineault · Claude Code for Scientists](https://www.neuroai.science/p/claude-code-for-scientists) — Speed of AI-assisted coding demands stronger validation, not weaker.
 - [wolf5996/agentic-skills](https://github.com/wolf5996/agentic-skills) — Skills repo with R-package, Quarto, R-code, and analysis-project skills; ships both `CLAUDE.md` and `CODEX.md`.
 
+## Pitfalls
+
+- [Navigating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of AI on Knowledge Worker Productivity and Quality](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321) - A paper on the causal impact of GPT4 on management consulting professionals performance. They introduce the term 'jagged frontier' which refers to uneven capability of LLMs to do certain tasks. They showed that within the frontier that quality increased and the time taken to complete an activity decreased by 25%, while on the other hand tasks that fell
+outside of the frontier produced incorrect results with users unable to recognise the result was incorrect. 
+- [Generative AI Without Guardrails Can Harm Learning: Evidence from High School Mathematics](https://www.pnas.org/doi/10.1073/pnas.2422633122) - A paper reporting on a RCT of ChatGPT use for mathematics, with an AI tutor that was specifically designed to help students with their math homework, compared against regular chatgpt and no AI intervenetions. Students who only used raw ChatGPT practiced more but had worse exam results compared to those who did not use AI, likewise the AI tutor arm had better practice scores compared to raw ChatGPT but performed about the same as the no AI arm on their (closed-book) exams.
