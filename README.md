@@ -128,6 +128,10 @@ A lot of this is just a refit of the [cookiecutter-data-science](https://cookiec
 2. **Reference canonical paths, never copy.** Same for figures: render once into `figures/`; reference from anywhere. For R specifically, make use of the `here` package.
 3. **Sensitive data stays out of the repo entirely.** Code-only repos are fine, but the data lives elsewhere on the HPC behind the same access controls as before. Don't point a Claude session at a directory that contains controlled data!
 
+### Sandboxing agents on the HPC
+
+Even with data off the repo, an agent running on a login node inherits your full filesystem access. [HPC_SANDBOX.md](HPC_SANDBOX.md) describes how to wrap Claude (or any CLI agent) in a `bubblewrap` sandbox that blocks shared project and data volumes while retaining access to your home directory. It also covers configuring a dedicated sandboxed VSCode Remote SSH host so the sandbox is the default for any session where you're running agents.
+
 ### How I use Claude
 
 - **Planning** — Pre-specify analyses or design of R functions with Claude, save the output as a plan. You can also get Claude to interview you for what you want.
